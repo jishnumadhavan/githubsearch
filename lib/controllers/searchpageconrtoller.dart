@@ -4,6 +4,7 @@ import 'package:flutter_web_browser/flutter_web_browser.dart';
 import 'package:githubsearch/view/ProfileView.dart';
 import 'package:githubsearch/view/ReposView.dart';
 import 'package:githubsearch/view/resultview.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 
@@ -151,6 +152,11 @@ class SearchPageController with ChangeNotifier {
   void clearText(){
     searchController.clear();
 
+  }
+   bool isConnected=true;
+  checkInternet() async {
+    isConnected = await InternetConnectionChecker().hasConnection;
+    print("connection is: ${isConnected.toString()}");
   }
 
 }

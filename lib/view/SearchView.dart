@@ -10,12 +10,19 @@ class SearchView extends StatefulWidget {
 }
 
 class _SearchViewState extends State<SearchView> {
+  void initState() {
+    super.initState();
+    // Call the initialization method using Provider
+    Provider.of<SearchPageController>(context, listen: false).checkInternet();
+  }
   @override
   Widget build(BuildContext context) {
     return Consumer<SearchPageController>(builder: (context, provider, child) {
       return Scaffold(
         backgroundColor: Colors.black54,
-        body: Column(
+        body:
+        provider.isConnected ?
+        Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Image.network("https://cdn-icons-png.flaticon.com/512/25/25231.png",
@@ -83,7 +90,26 @@ class _SearchViewState extends State<SearchView> {
           ),
         )
           ],
-        ),
+        ) :
+            Center(
+              child: Container(
+                child: Column(
+                  children: [
+                    SizedBox(
+                      height: 100,
+                    ),
+                    Image.asset("assets/no-internet.png", height: 200,),
+                    SizedBox(
+                      height: 15,
+                    ),
+                    Text("No internet", style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 18,
+                    ),)
+                  ],
+                ),
+              ),
+            )
       );
     }
     );

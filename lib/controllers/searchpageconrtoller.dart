@@ -20,7 +20,7 @@ class SearchPageController with ChangeNotifier {
   void filterbydown() {
     List itemList = [];
     itemList=CopyRepodata;
-    print("on filter $itemList");
+    // print("on filter $itemList");
     List sortedList = itemList.map((item) {
       DateTime createdAt = DateTime.parse(item['created_at']);
       return {'createdAt': createdAt, ...item};
@@ -32,13 +32,10 @@ class SearchPageController with ChangeNotifier {
     List filteredList =
     sortedList.reversed.take(numberOfItems).toList();
 
-    print(filteredList);
-
-    print(filteredList);
 
     Repodata=filteredList;
     notifyListeners();
-    print(filteredList);
+    // print(filteredList);
   }
 
   void filterbyup() {
@@ -58,12 +55,11 @@ class SearchPageController with ChangeNotifier {
 
     Repodata=filteredList;
     notifyListeners();
-    print(filteredList);
+    // print(filteredList);
   }
 
   void OnItemselect(int index){
     selectedIndex=index;
-    print("taped view ${index}");
     notifyListeners();
   }
    launchURL(String url) async {
@@ -83,12 +79,12 @@ class SearchPageController with ChangeNotifier {
     try {
       if(username.isNotEmpty) {
         Response data = await dio.get('https://api.github.com/users/$username');
-        print("data is:${data.data}");
+        // print("data is:${data.data}");
         Userdata= data.data;
-        print("user data is:${Userdata['public_repos']}");
+        // print("user data is:${Userdata['public_repos']}");
         notifyListeners();
         await getRepo(username);
-        print("list 22 is ${data.data['avatar_url']}");
+        // print("list 22 is ${data.data['avatar_url']}");
         loading=false;
         notifyListeners();
         Navigator.push(
@@ -100,31 +96,47 @@ class SearchPageController with ChangeNotifier {
       else{
         loading=false;
         notifyListeners();
+        showAlertDialog(context, "Sorry, no users were found matching your search");
         print("no users found");
       }
 
     } catch (e) {
       loading=false;
       notifyListeners();
+      showAlertDialog(context, "Sorry, some error occured");
       print("error is 1 :$e");
-      // throw Exception('Failed to load user data');
     }
   }
 
+  showAlertDialog(BuildContext context, String message) {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text(message),
+            content: Text('Try again'),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop(); // Close the dialog
+                },
+                child: Text('Close'),
+              ),
+            ],
+          );
+        }
+    );
+  }
   Future getRepo(String username) async {
     var dio=Dio();
 
     try {
       if(username.isNotEmpty) {
         Response data = await dio.get('https://api.github.com/users/$username/repos');
-        print("repo data is:${data.data.length}");
-        print("repo data is:${data.data.runtimeType}");
-        print("repo data is:${data.data.length}");
         Repodata=data.data;
         CopyRepodata=data.data;
-        print("user2 data is:${Repodata}");
         notifyListeners();
-        print("${data}");
+        // print("${data}");
       }
       else{
         print("no repo found");

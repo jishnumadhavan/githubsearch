@@ -79,6 +79,7 @@ class _RepoViewState extends State<RepoView> {
                 ],
               ),
             ),
+            provider.Repodata.isNotEmpty ?
             Container(
               margin: EdgeInsets.only(top: 15),
               height: MediaQuery.of(context).size.height * .69,
@@ -220,7 +221,10 @@ class _RepoViewState extends State<RepoView> {
                   ),
                 );
               }),
-            )
+            ) : Center(child: Text("no repositories found", style: TextStyle(
+              color: Colors.white,
+              fontSize: 16,
+            ),),)
           ],
         ),
       );

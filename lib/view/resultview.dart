@@ -1,6 +1,5 @@
 import 'package:flashy_tab_bar2/flashy_tab_bar2.dart';
 import 'package:flutter/material.dart';
-import 'package:githubsearch/models/User.dart';
 import 'package:githubsearch/utlis.dart';
 import 'package:provider/provider.dart';
 

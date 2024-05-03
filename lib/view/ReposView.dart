@@ -20,36 +20,68 @@ class _RepoViewState extends State<RepoView> {
         body: Column(
           children: [
             Container(
-              margin: EdgeInsets.only(top: 10),
+              padding: EdgeInsets.only(left: 10,right: 10),
+              margin: EdgeInsets.only(top: 5),
               // width: 250,
               decoration: BoxDecoration(
                 // color: colorWhite,
                 // borderRadius: BorderRadius.circular(8),
               ),
               child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment:
-                CrossAxisAlignment.start,
+                CrossAxisAlignment.center,
                 children: [
-                  SizedBox(
-                    width: 10,
+                  Row(
+                    children: [
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Icon(Icons.desk_outlined, color: Colors.white,),
+                      SizedBox(
+                        width: 5,
+                      ),
+                      Text(
+                        "Repositories",
+                        style: TextStyle(
+                          color: colorTextWhite,
+                          fontSize: 18,
+                        ),
+                      ),
+                    ],
                   ),
-                  Icon(Icons.desk_outlined, color: Colors.white,),
-                  SizedBox(
-                    width: 5,
+                  Row(
+                    children: [
+                      Text(
+                        "Last Updated",
+                        style: TextStyle(
+                          color: colorTextWhite,
+                          fontSize: 12,
+                        ),
+                      ),
+                      Column(
+                        children: [
+                          GestureDetector(
+                              onTap: (){
+                                provider.filterbyup();
+                              },
+                              child: Icon(Icons.arrow_drop_up, color: Colors.white, size: 25,)),
+                          GestureDetector(
+                              onTap: (){
+                                provider.filterbydown();
+                              },
+                              child: Icon(Icons.arrow_drop_down, color: Colors.white, size: 25,))
+                        ],
+                      )
+                    ],
                   ),
-                  Text(
-                    "Repositories",
-                    style: TextStyle(
-                      color: colorTextWhite,
-                      fontSize: 18,
-                    ),
-                  ),
+
                 ],
               ),
             ),
             Container(
               margin: EdgeInsets.only(top: 15),
-              height: MediaQuery.of(context).size.height * .72,
+              height: MediaQuery.of(context).size.height * .69,
               child: ListView.builder(
                   itemCount: provider.Repodata.length,
                   itemBuilder: (BuildContext, index){

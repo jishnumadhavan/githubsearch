@@ -6,17 +6,60 @@ import 'package:githubsearch/view/ReposView.dart';
 import 'package:githubsearch/view/resultview.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../models/User.dart';
 
 class SearchPageController with ChangeNotifier {
 
   TextEditingController searchController = TextEditingController();
-  List <User> userData=[];
+
   int selectedIndex=0;
   int repolength=0;
   Map<String, dynamic> Userdata={};
   List  Repodata=[];
+  List  CopyRepodata=[];
   List ViewItems=[ProfileView(), RepoView()];
+  void filterbydown() {
+    List itemList = [];
+    itemList=CopyRepodata;
+    print("on filter $itemList");
+    List sortedList = itemList.map((item) {
+      DateTime createdAt = DateTime.parse(item['created_at']);
+      return {'createdAt': createdAt, ...item};
+    }).toList();
+
+    sortedList.sort((a, b) => a['createdAt'].compareTo(b['createdAt']));
+
+    int numberOfItems = 3; // Number of latest items you want to filter
+    List filteredList =
+    sortedList.reversed.take(numberOfItems).toList();
+
+    print(filteredList);
+
+    print(filteredList);
+
+    Repodata=filteredList;
+    notifyListeners();
+    print(filteredList);
+  }
+
+  void filterbyup() {
+    List itemList = [];
+    itemList=CopyRepodata;
+
+    List sortedList = itemList.map((item) {
+      DateTime createdAt = DateTime.parse(item['created_at']);
+      return {'createdAt': createdAt, ...item};
+    }).toList();
+
+    sortedList.sort((a, b) => a['createdAt'].compareTo(b['createdAt']));
+
+    // int numberOfItems = 3; // Number of latest items you want to filter
+    List filteredList =
+    sortedList.reversed.toList();
+
+    Repodata=filteredList;
+    notifyListeners();
+    print(filteredList);
+  }
 
   void OnItemselect(int index){
     selectedIndex=index;
@@ -32,9 +75,11 @@ class SearchPageController with ChangeNotifier {
   Future<void> openBrowserTab(String url) async {
     await FlutterWebBrowser.openWebPage(url: "https://flutter.io/");
   }
+  bool loading=false;
   Future getUser(String username, BuildContext context) async {
+    loading=true;
+    notifyListeners();
     var dio=Dio();
-
     try {
       if(username.isNotEmpty) {
         Response data = await dio.get('https://api.github.com/users/$username');
@@ -44,36 +89,23 @@ class SearchPageController with ChangeNotifier {
         notifyListeners();
         await getRepo(username);
         print("list 22 is ${data.data['avatar_url']}");
-
-         userData.add(
-          User(
-            name: data.data['name'],
-            id: data.data['id'].toString(),
-            location: data.data['location'],
-            email: data.data['email'],
-            noofrepo: data.data['public_repos'].toString(),
-            avatar: data.data['avatar_url']
-          )
-        );
+        loading=false;
         notifyListeners();
-
         Navigator.push(
             context,
             MaterialPageRoute(builder: (context) => ResultView())
         );
-        print("list is ${userData.asMap()}");
-        // print("list is ${userData[0].name}");
-        // print("list is ${userData[0].location}");
-        // print("list is ${userData[0].avatar}");
-        // print("list is ${userData[0].noofrepo}");
-        //
-        // print("${data}");
+
       }
       else{
+        loading=false;
+        notifyListeners();
         print("no users found");
       }
 
     } catch (e) {
+      loading=false;
+      notifyListeners();
       print("error is 1 :$e");
       // throw Exception('Failed to load user data');
     }
@@ -89,6 +121,7 @@ class SearchPageController with ChangeNotifier {
         print("repo data is:${data.data.runtimeType}");
         print("repo data is:${data.data.length}");
         Repodata=data.data;
+        CopyRepodata=data.data;
         print("user2 data is:${Repodata}");
         notifyListeners();
         print("${data}");

@@ -73,7 +73,7 @@ class _SearchViewState extends State<SearchView> {
             onPressed: (){
               provider.getUser(provider.searchController.text, context);
             },
-            child: Text("Search", style: TextStyle(color: Colors.black87),),
+            child: provider.loading? CircularProgressIndicator() : Text("Search", style: TextStyle(color: Colors.black87),),
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.white,
               shape: RoundedRectangleBorder(

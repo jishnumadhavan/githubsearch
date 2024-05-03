@@ -1,8 +1,10 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_web_browser/flutter_web_browser.dart';
 import 'package:githubsearch/view/ProfileView.dart';
 import 'package:githubsearch/view/ReposView.dart';
 import 'package:githubsearch/view/resultview.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../models/User.dart';
 
@@ -20,6 +22,15 @@ class SearchPageController with ChangeNotifier {
     selectedIndex=index;
     print("taped view ${index}");
     notifyListeners();
+  }
+   launchURL(String url) async {
+     final Uri url2 = Uri.parse(url.toString());
+     if (!await launchUrl(url2)) {
+       throw Exception('Could not launch2 $url2');
+     }
+  }
+  Future<void> openBrowserTab(String url) async {
+    await FlutterWebBrowser.openWebPage(url: "https://flutter.io/");
   }
   Future getUser(String username, BuildContext context) async {
     var dio=Dio();

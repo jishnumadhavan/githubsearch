@@ -21,6 +21,7 @@ class _ResultViewState extends State<ResultView> {
         debugShowCheckedModeBanner: false,
         home: Scaffold(
           bottomNavigationBar: FlashyTabBar(
+            backgroundColor: colorBlack,
             animationCurve: Curves.easeIn,
             selectedIndex: provider.selectedIndex,
             showElevation: true,
@@ -28,12 +29,14 @@ class _ResultViewState extends State<ResultView> {
               provider.OnItemselect(index),
             items: [
               FlashyTabBarItem(
-                activeColor: colorBlack,
+                activeColor: colorWhite,
+                inactiveColor: colorWhite,
                 icon: Icon(Icons.person),
                 title: Text('Profile'),
               ),
               FlashyTabBarItem(
-                activeColor: colorBlack,
+                activeColor: colorWhite,
+                inactiveColor: colorWhite,
                 icon: Icon(Icons.search),
                 title: Text('Repositories'),
               ),

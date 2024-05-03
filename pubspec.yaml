@@ -38,6 +38,8 @@ dependencies:
   provider:
   dio:
   flashy_tab_bar2: ^0.0.10
+  flutter_web_browser: ^0.17.1
+  url_launcher: ^6.2.6
 
 dev_dependencies:
   flutter_test:

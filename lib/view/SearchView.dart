@@ -71,7 +71,7 @@ class _SearchViewState extends State<SearchView> {
           width: 300,
           child: ElevatedButton(
             onPressed: (){
-              provider.getUser(provider.searchController.text);
+              provider.getUser(provider.searchController.text, context);
             },
             child: Text("Search", style: TextStyle(color: Colors.black87),),
             style: ElevatedButton.styleFrom(

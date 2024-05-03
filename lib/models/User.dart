@@ -2,7 +2,7 @@ class User {
 
   User(
   {
-    this.name, this.id, this.avatar, required this.noofrepo, this.email, this.location
+    this.name, this.id, this.avatar,  this.noofrepo, this.email, this.location
 }
       );
 
@@ -10,7 +10,7 @@ class User {
   String? avatar;
   String? id;
   String? location;
-  int noofrepo;
+  String? noofrepo;
   String? email;
 
 }

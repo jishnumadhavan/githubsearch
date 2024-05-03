@@ -39,12 +39,14 @@ class _SearchViewState extends State<SearchView> {
                 // onEditingComplete: (){
                 //   provider.getUser(provider.searchController.text);
                 // },
-                onChanged: (value) {
-                  provider.getUser(provider.searchController.text);
-                },
+                // onChanged: (value) {
+                //   provider.getUser(provider.searchController.text);
+                // },
+                style: TextStyle(color: Colors.white),
                 decoration: InputDecoration(
                   prefixIcon: Icon(Icons.search),
                   hintText: 'Search',
+                  labelStyle: TextStyle(color: Colors.white),
                   hintStyle: TextStyle(color: Colors.grey),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),

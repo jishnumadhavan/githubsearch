@@ -1,5 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:githubsearch/view/ProfileView.dart';
+import 'package:githubsearch/view/ReposView.dart';
 import 'package:githubsearch/view/resultview.dart';
 
 import '../models/User.dart';
@@ -12,9 +14,11 @@ class SearchPageController with ChangeNotifier {
   int repolength=0;
   Map<String, dynamic> Userdata={};
   List  Repodata=[];
+  List ViewItems=[ProfileView(), RepoView()];
 
   void OnItemselect(int index){
     selectedIndex=index;
+    print("taped view ${index}");
     notifyListeners();
   }
   Future getUser(String username, BuildContext context) async {
